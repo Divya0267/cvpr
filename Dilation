@@ -1,0 +1,14 @@
+import cv2
+import numpy as np
+# Load the image
+image = cv2.imread('woman.webp', 0)  # Read image in grayscale mode
+# Create a kernel (structuring element) for dilation
+kernel = np.ones((5, 5), np.uint8)  # You can adjust the kernel size
+# Apply dilation
+dilated_image = cv2.dilate(image, kernel, iterations=1)
+# Display the original and dilated images
+cv2.imshow('Original Image', image)
+cv2.imshow('Dilated Image', dilated_image)
+# Wait for a key press and close all windows
+cv2.waitKey(0)
+cv2.destroyAllWindows()
