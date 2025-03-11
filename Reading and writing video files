@@ -1,0 +1,35 @@
+import cv2
+# Open the input video file
+cap = cv2.VideoCapture('video.mp4')
+# Check if the video file was opened successfully
+if not cap.isOpened():
+    print("Error: Could not open video.")
+    exit()
+# Get video properties (frame width, height, and fps)
+frame_width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
+frame_height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
+fps = cap.get(cv2.CAP_PROP_FPS)
+# Define the codec and create a VideoWriter object to save the output video
+fourcc = cv2.VideoWriter_fourcc(*'mp4v')  # Codec for .mp4 file
+out = cv2.VideoWriter('output_video.mp4', fourcc, fps, (frame_width, frame_height))
+# Create a fullscreen window
+cv2.namedWindow('Fullscreen Frame', cv2.WINDOW_NORMAL)
+cv2.setWindowProperty('Fullscreen Frame', cv2.WND_PROP_FULLSCREEN, cv2.WINDOW_FULLSCREEN)
+while cap.isOpened():
+    ret, frame = cap.read()
+    if not ret:
+        break  # If no frame is retrieved, the video has ended
+    # Apply a subtle filter (Gaussian Blur in this case)
+    blurred_frame = cv2.GaussianBlur(frame, (5, 5), 0)
+    # Write the modified frame to the output video file
+    out.write(blurred_frame)
+    # Display the blurred frame in fullscreen
+    cv2.imshow('Fullscreen Frame', blurred_frame)
+    # If 'q' is pressed, break the loop
+    if cv2.waitKey(1) & 0xFF == ord('q'):
+        break
+# Release the video capture and writer objects
+cap.release()
+out.release()
+# Close all OpenCV windows
+cv2.destroyAllWindows() 
