@@ -1,8 +1,0 @@
-import cv2
-# Load an image
-img = cv2.imread('woman.webp')
-# Convert from RGB to HSV
-hsv = cv2.cvtColor(img, cv2.COLOR_RGB2HSV)
-cv2.imshow("image", hsv)
-cv2.waitKey(0)
-cv2.destroyAllWindows()
